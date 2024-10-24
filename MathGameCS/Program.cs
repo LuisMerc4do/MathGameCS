@@ -48,17 +48,32 @@ namespace MathGameTutorial
                 difficultyLevel += 1;
             }
             _timer.Start();
+            bool smashed = false;
+            bool impressive = false;
             while (!gameIsOver)
             {
                 int numberOne = RandomNumberGenerator() * difficultyLevel;
                 int numberTwo = RandomNumberGeneratorTwo() * difficultyLevel;
                 System.Console.WriteLine($"Sum of: {numberOne} + {numberTwo}");
                 int inputResult;
+                
                 if (int.TryParse(Console.ReadLine(), out inputResult))
                 {
                     if (inputResult == numberOne + numberTwo)
                     {
                         totalPoints = totalPoints + 1;
+                        if (totalPoints >= 15 && totalPoints <= 30 && !smashed)
+                        {
+                            Console.WriteLine("Okay you smashed it, incrementing the difficulty level");
+                            difficultyLevel += 1;
+                            smashed = true;
+                        }
+                        if (totalPoints >= 30 && !impressive)
+                        {
+                            Console.WriteLine("Wow, that is impressive, incrementing the difficulty level");
+                            difficultyLevel += 2;
+                            impressive = true;
+                        }
                         continue;
                     }
                     else
@@ -68,6 +83,8 @@ namespace MathGameTutorial
                         System.Console.WriteLine($"Time taken: {totalTime:0.00} seconds");
                         gameIsOver = true;
                     }
+                    
+                    
                 }
                 else
                 {
